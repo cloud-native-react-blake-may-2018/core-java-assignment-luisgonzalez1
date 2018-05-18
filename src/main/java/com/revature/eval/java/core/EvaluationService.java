@@ -1,10 +1,17 @@
 package com.revature.eval.java.core;
 
+import java.time.temporal.ChronoField;
 import java.time.temporal.Temporal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class EvaluationService {
+	
 
 	/**
 	 * 1. Without using the StringBuilder or StringBuffer class, write a method that
@@ -30,8 +37,20 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String acronym(String phrase) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		String phraseWords[] = phrase.split(" "); 
+		String acronym = "";
+     
+ 		for (int i = 0 ;i<phraseWords.length ; i++)
+ 		{   //.substring
+ 			//This method returns new String object
+ 			//containing the substring of the given string from specified startIndex to endIndex.
+ 			acronym+= phraseWords[i].substring(0, 1);
+ 			 
+ 			
+ 		}
+ 		 acronym.toUpperCase(); 
+ 		
+		return acronym;
 	}
 
 	/**
@@ -84,21 +103,33 @@ public class EvaluationService {
 		}
 
 		public boolean isEquilateral() {
-			// TODO Write an implementation for this method declaration
+
+			if(this.sideOne == this.sideTwo && this.sideOne == this.sideThree)
+			{
+				return true;
+			}
+			
+			
 			return false;
 		}
 
 		public boolean isIsosceles() {
-			// TODO Write an implementation for this method declaration
-			return false;
+			 if(this.sideOne == this.sideTwo || this.sideOne == this.sideThree || this.sideTwo== this.sideThree) {
+			return true;
 		}
+		else return false;
+	}
 
 		public boolean isScalene() {
-			// TODO Write an implementation for this method declaration
-			return false;
+ 		 if (!this.isIsosceles()) {
+ 			 
+ 			 return true ;
+ 		
 		}
+ 		else return false;
 
 	}
+}
 
 	/**
 	 * 4. Given a word, compute the scrabble score for that word.
@@ -116,9 +147,95 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int getScrabbleScore(String string) {
-		// TODO Write an implementation for this method declaration
-		return 0;
-	}
+		string=string.toUpperCase();
+		 
+		String inputString[] =  string.split("");
+	    String onePoint[] = {"A", "E", "I", "O", "U", "L", "N", "R", "S", "T"} ;
+	    String twoPoint[] = {"D", "G"};
+	    String threePoint[] = {"B","C", "M", "P"};
+	    String fourPoint[] = {"F", "H", "V", "W", "Y"};
+	    String fivePoint[] = {"K"};
+	    String eightPoint[] = {"J", "X"};
+	    String tenPoint[]= {"Q", "Z"};
+	    int counter=0;
+	    
+	    
+	    for (String letter:onePoint) {
+	    	 for (String ltrInputString:inputString) {
+	    		 
+	    		 if(ltrInputString.equals(letter)) {
+	    			 
+	    			 counter+=1;
+	    		 }
+	    	 }
+	    }  
+	    
+	    for (String letter:twoPoint) {
+	    	 for (String ltrInputString:inputString) {
+	    		 
+	    		 if(ltrInputString.equals(letter)) {
+	    			 
+	    			 counter+=2;
+	    		 }
+	    	 }
+	    }  
+	    
+	    for (String letter:threePoint) {
+	    	 for (String ltrInputString:inputString) {
+	    		 
+	    		 if(ltrInputString.equals(letter)) {
+	    			 
+	    			 counter+=3;
+	    		 }
+	    	 }
+	    }  
+	    
+	    for (String letter:fourPoint) {
+	    	 for (String ltrInputString:inputString) {
+	    		 
+	    		 if(ltrInputString.equals(letter)) {
+	    			 
+	    			 counter+=4;
+	    		 }
+	    	 }
+	    }  
+	    
+	    for (String letter:fivePoint) {
+	    	 for (String ltrInputString:inputString) {
+	    		 
+	    		 if(ltrInputString.equals(letter)) {
+	    			 
+	    			 counter+=5;
+	    		 }
+	    	 }
+	    }  
+	    
+	    for (String letter:eightPoint) {
+	    	 for (String ltrInputString:inputString) {
+	    		 
+	    		 if(ltrInputString.equals(letter)) {
+	    			
+	    			 counter+=8;
+	    		 }
+	    	 }
+	    }  
+	    
+	    for (String letter:tenPoint) {
+	    	 for (String ltrInputString:inputString) {
+	    		 
+	    		 if(ltrInputString.equals(letter)) {
+	    			 
+	    			 counter+=10;
+	    		 }
+	    	 }
+	    }  
+	     
+	    
+
+	    
+	    
+	    return counter;
+}
 
 	/**
 	 * 5. Clean up user-entered phone numbers so that they can be sent SMS messages.
@@ -151,9 +268,13 @@ public class EvaluationService {
 	 * Note: As this exercise only deals with telephone numbers used in
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
-	public String cleanPhoneNumber(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+	public String cleanPhoneNumber(String number) {
+		 
+		System.out.println(number);
+		
+		number = number.replaceAll("[ (  ) \\+ \\. 1 \\- ]", "");
+				
+		return number;
 	}
 
 	/**
@@ -166,8 +287,38 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Map<String, Integer> wordCount(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		Map<String, Integer> wordCounter = new HashMap<String, Integer>();
+		
+		//string = "olly olly olly in in in in come free" ;
+		String sentence[] = string.split(" ");
+		
+		//wordCounter.put(sentence[0], 1);
+		for (String word : sentence) {
+			if(wordCounter.containsKey(word) ) {
+				
+				wordCounter.put(word, wordCounter.get(word)+1);
+				 
+			}else {
+				wordCounter.put(word, 1);
+				
+			}
+			
+			 
+		}
+//		prints the HashMap
+//		Set seOfKeys = wordCounter.keySet();
+//		Iterator iterator = seOfKeys.iterator();
+//		while(iterator.hasNext()) {
+//			
+//			String key = (String) iterator.next();
+//			Integer value =(Integer)wordCounter.get(key);
+//			
+//			System.out.println( key + " : " + value);
+//		}
+
+
+
+		return wordCounter;
 	}
 
 	/**
@@ -208,11 +359,10 @@ public class EvaluationService {
 	static class BinarySearch<T> {
 		private List<T> sortedList;
 
-		public int indexOf(T t) {
-			// TODO Write an implementation for this method declaration
-			return 0;
+		public int indexOf(T t) {			 			
+			  return  this.sortedList.indexOf(t);	 	  
+			 
 		}
-
 		public BinarySearch(List<T> sortedList) {
 			super();
 			this.sortedList = sortedList;
@@ -225,7 +375,7 @@ public class EvaluationService {
 		public void setSortedList(List<T> sortedList) {
 			this.sortedList = sortedList;
 		}
-
+         
 	}
 
 	/**
@@ -246,7 +396,36 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String toPigLatin(String string) {
-		// TODO Write an implementation for this method declaration
+		 String vowels[]= {"a","e","i","o","u"};
+		 String stringArr[] =string.split(" ");
+		 String firstLetter =null;
+		 
+		 for (int i=0 ;i< stringArr.length ; i++ ) {
+			    firstLetter=stringArr[i].substring(0,1);
+			    
+			 if(firstLetter.equals("a")  ||  firstLetter.equals("e")  || firstLetter.equals("i") 
+					 || firstLetter.equals("o")  ||  firstLetter.equals("u")  ) {
+				 
+				 stringArr[i] = stringArr[i].concat("ay");
+				 
+				 System.out.println(stringArr[i]);
+			 }else {
+			 				 
+				//concat first letter to the end of stringArr
+				 
+				 	stringArr[i]=stringArr[i].concat(stringArr[i].substring(0,1));
+			    //new stringArr without first letter
+				 	
+				 	stringArr[i] =stringArr[i].substring(1);
+			   //concat first ay to the end of stringArr
+				 	
+				 	stringArr[i]=stringArr[i].concat("ay");
+			 
+			        System.out.println(stringArr[i]);
+			 }
+				 
+ 		 }	 
+		
 		return null;
 	}
 
@@ -266,8 +445,26 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isArmstrongNumber(int input) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		int sum =0 ; 
+		Integer number  =  input;
+		
+		number.toString().length();
+		String[] arr= number.toString().split("");
+		Integer numArr[] =new Integer[arr.length];
+		
+		
+	    for(int i= 0 ; i<arr.length ; i++ ) {
+	    	
+	    	
+	    	numArr[i]=Integer.parseInt(arr[i]);
+	     	sum+=Math.pow(numArr[i], numArr.length);
+	    	
+	    }
+		 
+		System.out.println(sum);
+		if (sum == number) {
+			return true;
+		}else return false;
 	}
 
 	/**
@@ -282,6 +479,23 @@ public class EvaluationService {
 	 */
 	public List<Long> calculatePrimeFactorsOf(long l) {
 		// TODO Write an implementation for this method declaration
+		for (long i=2; i <= l/i; i++) {
+			 System.out.println("{ i = " + i + " , number = " + l + "}");
+			 while(l%i == 0) {
+			  l = l/i;
+			  System.out.println("Factor: " + i);
+			 }
+
+			 }
+			 if(l > 1) {
+			  System.out.println("Factor: " + l);
+			 }
+			 System.out.println();
+
+			
+
+		
+		
 		return null;
 	}
 
@@ -316,12 +530,73 @@ public class EvaluationService {
 
 		public RotationalCipher(int key) {
 			super();
-			this.key = key;
+			this.setKey(key);
 		}
 
 		public String rotate(String string) {
 			// TODO Write an implementation for this method declaration
-			return null;
+			
+		   String arr[] = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"}  ;
+		    
+		   String arr2[] = Arrays.copyOfRange(arr, arr.length-this.getKey(), arr.length);
+		   String arr3[] = Arrays.copyOfRange(arr, 0, arr.length-this.getKey());
+		   String merge[] = new String[arr2.length+arr3.length];
+		   int continueString = 0;	
+		   String decoded = "";
+		   String shifted ="";
+		   String alphabeth ="";
+		   string=string.toUpperCase();
+		   String arrOfInput[] = string.split("");
+		   
+		     
+		   /// fors will create the array with the shift
+		     
+		     for (int i = 0 ; i<arr2.length ; i++) {
+		    	 merge[i]=arr2[i];
+		    	 
+		    	 continueString ++;
+		     }
+		     for (int j = 0 ; j<arr3.length ; j++) {
+		    	 
+		    	 merge[continueString ++]=arr3[j];
+		    	 
+		     }
+		     
+		     // will compare string with shifted alphabeth
+		     //will look index in normal alphabeth 
+		     //and then will retrieve element in shifted alphabeth
+		     for (int i=0 ; i< arrOfInput.length ; i++) {
+		     
+		      if(Arrays.asList(arr).contains(arrOfInput[i])) {
+		    	  int index = Arrays.asList(arr).indexOf(arrOfInput[i]);
+		    	  decoded+= Arrays.asList(merge).get(index);
+		    	  
+		      }else {
+		    	  decoded+=" ";
+		      }
+		    	  
+		     }
+		      
+		      for(String l:merge) {
+			    	 
+			    	shifted+=l;
+			    }
+		      for(String l:arr) {
+			    	 
+			    	alphabeth+=l;
+			    }
+		      System.out.println(alphabeth.toLowerCase());
+		      System.out.println(shifted.toLowerCase());
+		      decoded=decoded.toLowerCase();
+			return  decoded;
+		}
+
+		public int getKey() {
+			return key;
+		}
+
+		public void setKey(int key) {
+			this.key = key;
 		}
 
 	}
@@ -340,7 +615,22 @@ public class EvaluationService {
 	 */
 	public int calculateNthPrime(int i) {
 		// TODO Write an implementation for this method declaration
-		return 0;
+		int numerator=2;
+		int results =0;
+		int counter =1;
+		while(counter != i) {
+			numerator++;
+			results = numerator%2;
+			if (results !=0) {
+				counter ++;
+				
+			}	
+			
+		}
+		 
+		return numerator;
+			
+		
 	}
 
 	/**
@@ -364,7 +654,7 @@ public class EvaluationService {
 	 * to guess things based on word boundaries.
 	 * 
 	 * Examples Encoding test gives gvhg Decoding gvhg gives test Decoding gsvjf
-	 * rxpyi ldmul cqfnk hlevi gsvoz abwlt gives thequickbrownfoxjumpsoverthelazydog
+	 * gsvjf rxpyi ldmul cqfnk hlevi gsvoz abwlt gives thequickbrownfoxjumpsoverthelazydog
 	 *
 	 */
 	static class AtbashCipher {
@@ -376,8 +666,55 @@ public class EvaluationService {
 		 * @return
 		 */
 		public static String encode(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			String arr[] = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"}  ;
+			String arrReversed[] = new String [arr.length];
+			string=string.toUpperCase();
+			String arrOfInput[]= string.split("");
+			 
+			int counter=arr.length-1;
+			String encoded="";
+			String reversedAlphabeth ="";
+			String alphabeth ="";
+			
+			// will allocate reversed alphabeth on arrReversed
+			for (int i=0 ;i< arr.length ;i++) {
+				 arrReversed[i]=arr[counter];
+				counter--;
+			}
+			
+			 
+			
+			 
+			 for (int i=0 ; i< arrOfInput.length ; i++) {
+			     
+			      if(Arrays.asList(arr).contains(arrOfInput[i])) {
+			    	  
+			    	  int index = Arrays.asList(arr).indexOf(arrOfInput[i]);
+			    	  encoded+= Arrays.asList(arrReversed).get(index);
+			    	  
+			      }else {
+			    	  encoded+=" ";
+			      }
+			     } 
+			 
+			 
+			 
+			 
+			for(String l:arrReversed) {
+		    	 
+				reversedAlphabeth+=l;
+		    }
+	      for(String l:arr) {
+		    	 
+		    	alphabeth+=l;
+		    }
+	      
+	      System.out.println(alphabeth.toLowerCase());
+	      System.out.println(reversedAlphabeth.toLowerCase());
+	      encoded=encoded.toLowerCase();
+	      
+	      
+			return encoded;
 		}
 
 		/**
@@ -387,8 +724,57 @@ public class EvaluationService {
 		 * @return
 		 */
 		public static String decode(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			
+			String arr[] = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"}  ;
+			String arrReversed[] = new String [arr.length];
+			string=string.toUpperCase();
+			String arrOfInput[]= string.split("");
+			 
+			int counter=arr.length-1;
+			String decoded="";
+			String reversedAlphabeth ="";
+			String alphabeth ="";
+			
+			// will allocate reversed alphabeth on arrReversed
+			for (int i=0 ;i< arr.length ;i++) {
+				 arrReversed[i]=arr[counter];
+				counter--;
+			}
+			
+			 
+			
+			 //same block for encode and decode  
+			//the only thing that change is the order of the arr
+			 for (int i=0 ; i< arrOfInput.length ; i++) {
+			     
+			      if(Arrays.asList(arr).contains(arrOfInput[i])) {
+			    	  
+			    	  int index = Arrays.asList(arrReversed).indexOf(arrOfInput[i]);
+			    	  decoded+= Arrays.asList(arr).get(index);
+			    	  
+			      }
+			     } 
+			 
+			 
+			 
+			 
+			for(String l:arrReversed) {
+		    	 
+				reversedAlphabeth+=l;
+		    }
+	      for(String l:arr) {
+		    	 
+		    	alphabeth+=l;
+		    }
+	      
+	      //System.out.println(alphabeth.toLowerCase());
+	      //System.out.println(reversedAlphabeth.toLowerCase());
+	      decoded=decoded.toLowerCase();
+	      
+	      
+			return decoded;
+			 
+			
 		}
 	}
 
@@ -415,8 +801,38 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isValidIsbn(String string) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		 string=string.replace("-" ,"");
+		  System.out.println(string);
+		  String[] arr= string.split("");
+		  int multiplier=10;
+		  int sum=0;
+			Integer numArr[] =new Integer[arr.length];
+			
+			//converting string elements to int
+		    for(int i= 0 ; i<arr.length ; i++ ) {  	
+		    	
+		    	numArr[i]=Integer.parseInt(arr[i]);   	 
+		    	
+		    }
+		    
+		    //multiply all elements
+		    //and sum all elements
+		    for (Integer n:numArr) {
+		    	n*=multiplier;
+		    	sum+=n;
+		    	multiplier --;
+		     	 
+
+		    }
+
+		    System.out.println(sum);
+		    //divide sum by 11
+		    if(sum%11==0) {
+		    	return true;
+		    			
+		    }else return false;
+		
+		
 	}
 
 	/**
@@ -434,7 +850,52 @@ public class EvaluationService {
 	 */
 	public boolean isPangram(String string) {
 		// TODO Write an implementation for this method declaration
-		return false;
+		//upper cased string due to arr[] having upper cased elements
+		String arr[] = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"}  ;
+		string=string.toUpperCase();
+		string=string.replaceAll(" ", "");
+		String arrOfInput[]= string.split("");
+		//System.out.println(string.length());
+		//System.out.println(string);
+		String notRepeatString="";
+		
+		String arrNotRepeated[]=new String[40];
+		int confirm=0;
+		for (int i=0 ; i< arrOfInput.length ; i++) {
+		     
+		      if(Arrays.asList(arr).contains(arrOfInput[i])) {
+		    	  
+		    	  
+		    	  //filters repeated letters withing the input string    
+		    	   	  
+		    	  if(!Arrays.asList(arrNotRepeated).contains(arrOfInput[i])) {
+		    		 
+		    		  arrNotRepeated[i]=arrOfInput[i];
+		    		   
+		    		   
+		    		 // System.out.println(arrConfirm[i]);
+		    	  }
+		    	  	  
+		      } 
+		     
+		     }
+		 //pass elements on arrNotRepeated to notRepeatString and filter any null variables within array 
+		for (String l: arrNotRepeated) {
+			if(l!=null) {
+				notRepeatString+=l;
+			}
+			
+		}
+		 
+		System.out.println("Original string  :" + string.toLowerCase());
+		System.out.println("String without repeated letters  :" + notRepeatString.toLowerCase());
+		 
+		//notRepeatString is true if length is equal to the amount of letters in the alphabeth
+			if ( notRepeatString.length() == 26) {
+				return true;
+	    	  
+			}else return false;
+		 
 	}
 
 	/**
@@ -447,6 +908,7 @@ public class EvaluationService {
 	 */
 	public Temporal getGigasecondDate(Temporal given) {
 		// TODO Write an implementation for this method declaration
+		 System.out.println(given.get(ChronoField.SECOND_OF_MINUTE));
 		return null;
 	}
 
@@ -464,8 +926,18 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int getSumOfMultiples(int i, int[] set) {
+		int sum =0;
+		System.out.println("Multiples of "+ i);
+		for(int number:set) {
+			
+			if(number%i == 0 ) {
+				sum+=number;
+				System.out.println(number);
+			}
+		}
+		
 		// TODO Write an implementation for this method declaration
-		return 0;
+		return sum;
 	}
 
 	/**
@@ -505,8 +977,59 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isLuhnValid(String string) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		 string=string.replace(" ", "");
+		 string=string.substring(1);
+		 String strArr[]=string.split("");
+		 Integer numArr[]=new Integer[strArr.length];
+		 
+		 for ( int i =0; i< strArr.length ; i++) {
+			 
+			 numArr[i]=Integer.parseInt(strArr[i]);
+		 }
+		 String strNumber="";
+		 Integer digit1;
+		 Integer digit2;
+		 
+		 
+		 for (int i = 0;i<numArr.length; i+=2) {
+			 
+			 numArr[i]*=2;
+			 
+			 if(numArr[i] >9 ) {
+				 
+				 strNumber=String.valueOf(numArr[i]);
+				 digit1=Integer.parseInt(strNumber.substring(0, 1));
+				 digit2=Integer.parseInt(strNumber.substring(1));
+				 numArr[i]=digit1+digit2;
+				 
+				 
+				 
+			 }
+			 
+			 
+			 
+			 
+		 }
+		 int sum=0;
+		 String doubled="";
+		 for(Integer n:numArr) {
+			 
+			 doubled+=n;
+			 sum+=n;
+		 }
+		 System.out.println("Initial input String "+string);
+		 System.out.println("Doubled String "+doubled);		 
+		 System.out.println("Sum of all the products " + sum);
+		 
+		 if(sum%10==0) {
+			 return true;
+			 
+			 
+		 }else  return false; 
+		
+		
+		
+		 
 	}
 
 	/**
@@ -538,7 +1061,60 @@ public class EvaluationService {
 	 */
 	public int solveWordProblem(String string) {
 		// TODO Write an implementation for this method declaration
-		return 0;
+		string.replace("?", "");
+		System.out.println(string);
+		String arr[]=string.split(" ");
+		String mathTerms[]= {"multiplied","divided","minus","plus"};
+		String numbers[]= {"1","2","3","4","5","6","7","8","9"};
+         int i=0;
+         int index=0;
+         int operator=0;
+         int value[]=new int[2];
+         int counter=0;
+         int value1=0;
+         int value2=0;
+         int results=0;
+          
+		while(i<=100) {
+			 //System.out.println("inside while");
+			
+					if(Arrays.asList(arr).contains(String.valueOf(i))){
+						
+						 value[counter]=i;
+						 counter++;
+						
+						
+					}
+					i++;
+			}
+		
+		value1=value[0];
+		value2=value[1];
+		System.out.println(value1);
+		System.out.println(value2);
+		
+		if(Arrays.asList(arr).contains("multiplied")){
+			
+			  results=value2*value1;
+			
+			
+		}else if(Arrays.asList(arr).contains("divided")){
+			
+			results=value2/value1;
+			
+		}else if(Arrays.asList(arr).contains("minus")){
+			
+			results=value2-value1;
+			
+		}else if(Arrays.asList(arr).contains("plus")){
+			
+			results=value2+value1;
+			
+		}
+		
+		
+		return results;
 	}
 
 }
+ 
