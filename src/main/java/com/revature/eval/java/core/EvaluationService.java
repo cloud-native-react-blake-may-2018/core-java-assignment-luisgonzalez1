@@ -1,6 +1,11 @@
 package com.revature.eval.java.core;
 
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoField;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -359,8 +364,13 @@ public class EvaluationService {
 	static class BinarySearch<T> {
 		private List<T> sortedList;
 
-		public int indexOf(T t) {			 			
+		public int indexOf(T t) {		
+			
+			
+			 if(this.sortedList.contains(t)) {
 			  return  this.sortedList.indexOf(t);	 	  
+			 }else return -1;
+			 
 			 
 		}
 		public BinarySearch(List<T> sortedList) {
@@ -399,6 +409,7 @@ public class EvaluationService {
 		 String vowels[]= {"a","e","i","o","u"};
 		 String stringArr[] =string.split(" ");
 		 String firstLetter =null;
+		 String pigStr="";
 		 
 		 for (int i=0 ;i< stringArr.length ; i++ ) {
 			    firstLetter=stringArr[i].substring(0,1);
@@ -408,7 +419,13 @@ public class EvaluationService {
 				 
 				 stringArr[i] = stringArr[i].concat("ay");
 				 
-				 System.out.println(stringArr[i]);
+				 //System.out.println(stringArr[i]);
+				 
+				 if (Arrays.asList(stringArr).contains(stringArr[i])){
+				        pigStr += stringArr[i];
+						pigStr += " ";
+				       }
+				 
 			 }else {
 			 				 
 				//concat first letter to the end of stringArr
@@ -421,12 +438,19 @@ public class EvaluationService {
 				 	
 				 	stringArr[i]=stringArr[i].concat("ay");
 			 
-			        System.out.println(stringArr[i]);
+			        //System.out.println(stringArr[i]);
+			        
+			       if (Arrays.asList(stringArr).contains(stringArr[i])){
+			        pigStr += stringArr[i];
+					pigStr += " ";
+			       }
 			 }
+			 
+			 
 				 
  		 }	 
 		
-		return null;
+		return pigStr;
 	}
 
 	/**
@@ -479,16 +503,19 @@ public class EvaluationService {
 	 */
 	public List<Long> calculatePrimeFactorsOf(long l) {
 		// TODO Write an implementation for this method declaration
+		List<Long> primeFac = new  ArrayList<Long>();
 		for (long i=2; i <= l/i; i++) {
 			 System.out.println("{ i = " + i + " , number = " + l + "}");
 			 while(l%i == 0) {
 			  l = l/i;
-			  System.out.println("Factor: " + i);
+			  //System.out.println("Factor: " + i);
+			  primeFac.add(i);
 			 }
 
 			 }
 			 if(l > 1) {
-			  System.out.println("Factor: " + l);
+			  //System.out.println("Factor: " + l);
+			  primeFac.add(l);
 			 }
 			 System.out.println();
 
@@ -496,7 +523,7 @@ public class EvaluationService {
 
 		
 		
-		return null;
+		return primeFac;
 	}
 
 	/**
@@ -906,11 +933,24 @@ public class EvaluationService {
 	 * @param given
 	 * @return
 	 */
-	public Temporal getGigasecondDate(Temporal given) {
-		// TODO Write an implementation for this method declaration
-		 System.out.println(given.get(ChronoField.SECOND_OF_MINUTE));
-		return null;
-	}
+	 
+		public Temporal getGigasecondDate(Temporal given) {
+			// TODO Write an implementation for this method declaration
+			int gigaSecond = 1000000000;
+			int year;
+			int day;
+			int month;
+			if (given.isSupported(ChronoUnit.SECONDS))
+				return given.plus(gigaSecond, ChronoUnit.SECONDS);
+			else {
+				year = given.get(ChronoField.YEAR);
+				month = given.get(ChronoField.MONTH_OF_YEAR);
+				day = given.get(ChronoField.DAY_OF_MONTH);
+			}
+			
+			return LocalDateTime.of(year, month, day, 0, 0, 0).plus(gigaSecond, ChronoUnit.SECONDS);
+		}
+	
 
 	/**
 	 * 18. Given a number, find the sum of all the unique multiples of particular
