@@ -365,6 +365,7 @@ public class EvaluationService {
 		private List<T> sortedList;
 
 		public int indexOf(T t) {		
+			 
 			
 			
 			 if(this.sortedList.contains(t)) {
@@ -387,6 +388,7 @@ public class EvaluationService {
 		}
          
 	}
+
 
 	/**
 	 * 8. Implement a program that translates from English to Pig Latin.
@@ -940,8 +942,8 @@ public class EvaluationService {
 			int year;
 			int day;
 			int month;
-			if (given.isSupported(ChronoUnit.SECONDS))
-				return given.plus(gigaSecond, ChronoUnit.SECONDS);
+			if (given.isSupported(ChronoUnit.SECONDS)) 				
+			 return given.plus(gigaSecond, ChronoUnit.SECONDS);
 			else {
 				year = given.get(ChronoField.YEAR);
 				month = given.get(ChronoField.MONTH_OF_YEAR);
@@ -1101,9 +1103,12 @@ public class EvaluationService {
 	 */
 	public int solveWordProblem(String string) {
 		// TODO Write an implementation for this method declaration
-		string.replace("?", "");
+		System.out.println(string);
+		string=string.replaceAll("\\?"," ");	
+		System.out.println(string);
 		System.out.println(string);
 		String arr[]=string.split(" ");
+		 
 		String mathTerms[]= {"multiplied","divided","minus","plus"};
 		String numbers[]= {"1","2","3","4","5","6","7","8","9"};
          int i=0;
